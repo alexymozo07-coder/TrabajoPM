@@ -1,18 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { Colors } from '../constants/Colors';
+import { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-// Título de la app
-export default function Header() {
+import Header from '../components/Header';
+import OptionSelector from '../components/OptionSelector';
+import { Colors } from '../constants/Colors';
+import { genres, platforms } from '../data/movies';
+
+export default function HomeScreen() {
+  const [genre, setGenre] = useState('Todos');
+  const [platform, setPlatform] = useState('Todas');
+
   return (
-    <View style={styles.contenedor}>
-      <Text style={styles.titulo}>🎬 ¿Qué veo hoy?</Text>
-      <Text style={styles.subtitulo}>Elige un género y una plataforma, y te recomendamos algo.</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.fondo, padding: 20 }}>
+      <Header />
+
+      <OptionSelector titulo="Género" opciones={genres} seleccionada={genre} onSeleccionar={setGenre} />
+      <OptionSelector titulo="Plataforma" opciones={platforms} seleccionada={platform} onSeleccionar={setPlatform} />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  contenedor: { marginBottom: 20 },
-  titulo: { color: Colors.texto, fontSize: 28, fontWeight: 'bold' },
-  subtitulo: { color: Colors.textoSuave, fontSize: 14, marginTop: 4 },
-});
